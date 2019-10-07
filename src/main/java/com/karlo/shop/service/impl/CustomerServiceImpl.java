@@ -2,6 +2,7 @@ package com.karlo.shop.service.impl;
 
 import com.karlo.shop.api.v1.mapper.CustomerMapper;
 import com.karlo.shop.api.v1.model.CustomerDTO;
+import com.karlo.shop.domain.Customer;
 import com.karlo.shop.repository.CustomerRepository;
 import com.karlo.shop.service.CustomerService;
 
@@ -34,5 +35,19 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id)
                 .map(customerMapper::customerToCustomerDTO)
                 .orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public CustomerDTO createCustomer(CustomerDTO customerDTO) {
+
+        Customer customer = customerMapper.customerDTOtoCustomer(customerDTO);
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        CustomerDTO dtoToReturn = customerMapper.customerToCustomerDTO(savedCustomer);
+
+        dtoToReturn.setCustomerUrl("/api/v1/customer/" + savedCustomer.getId());
+
+        return dtoToReturn;
     }
 }
