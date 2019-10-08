@@ -103,4 +103,19 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName", equalTo(NAME)))
                 .andExpect(jsonPath("$.customerUrl", equalTo(CUSTOMER_URL)));
     }
+
+    @Test
+    public void updateCustomer() throws Exception{
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(NAME);
+        customerDTO.setLastName(LAST_NAME);
+        customerDTO.setCustomerUrl(CUSTOMER_URL);
+
+        CustomerDTO dtoToReturn = new CustomerDTO();
+        dtoToReturn.setFirstName(customerDTO.getFirstName());
+        dtoToReturn.setLastName(customerDTO.getLastName());
+        dtoToReturn.setCustomerUrl(CUSTOMER_URL);
+
+
+    }
 }
