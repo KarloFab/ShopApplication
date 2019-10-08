@@ -81,7 +81,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void updateCustomer() throws Exception{
+    public void saveCustomerByDTO() throws Exception{
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(NAME);
         customerDTO.setLastName(LAST_NAME);

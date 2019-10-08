@@ -1,6 +1,5 @@
 package com.karlo.shop.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.karlo.shop.api.v1.model.CustomerDTO;
 import com.karlo.shop.service.CustomerService;
 import org.junit.Before;
@@ -106,7 +105,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void updateCustomer() throws Exception{
+    public void saveCustomerByDTO() throws Exception{
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(NAME);
         customerDTO.setLastName(LAST_NAME);
@@ -117,7 +116,7 @@ public class CustomerControllerTest {
         dtoToReturn.setLastName(customerDTO.getLastName());
         dtoToReturn.setCustomerUrl(CUSTOMER_URL);
 
-        when(customerService.updateCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(dtoToReturn);
+        when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(dtoToReturn);
 
         mockMvc.perform(put(CUSTOMER_URL + "1")
                 .contentType(MediaType.APPLICATION_JSON)
