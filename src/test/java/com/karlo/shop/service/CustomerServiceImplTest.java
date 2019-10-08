@@ -80,4 +80,23 @@ public class CustomerServiceImplTest {
         assertEquals(customerDTO.getLastName(), savedDTO.getLastName());
     }
 
+    @Test
+    public void updateCustomer() throws Exception{
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(NAME);
+        customerDTO.setLastName(LAST_NAME);
+
+        Customer savedCustomer = new Customer();
+        savedCustomer.setFirstName(customerDTO.getFirstName());
+        savedCustomer.setLastName(customerDTO.getLastName());
+        savedCustomer.setId(1l);
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+
+        CustomerDTO updatedDTO = customerService.createCustomer(customerDTO);
+
+        assertEquals(customerDTO.getFirstName(), updatedDTO.getFirstName());
+        assertEquals(customerDTO.getLastName(), updatedDTO.getLastName());
+    }
+
 }
