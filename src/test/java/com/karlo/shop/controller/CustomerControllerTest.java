@@ -1,5 +1,6 @@
 package com.karlo.shop.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.karlo.shop.api.v1.model.CustomerDTO;
 import com.karlo.shop.service.CustomerService;
 import org.junit.Before;
@@ -14,11 +15,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.karlo.shop.controller.AbstractRestControllerTest.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,6 +29,7 @@ public class CustomerControllerTest {
     public static final Long ID = 1L;
     public static final String NAME = "Joe";
     public static final String LAST_NAME = "Joey";
+    public static final String CUSTOMER_URL = "/api/v1/customers/";
 
     @Mock
     CustomerService customerService;
@@ -77,5 +80,26 @@ public class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName",equalTo(NAME)))
                 .andExpect(jsonPath("$.lastName",equalTo(LAST_NAME)));
+    }
+
+    @Test
+    public void createCustomer() throws Exception {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(NAME);
+        customerDTO.setLastName(LAST_NAME);
+
+        CustomerDTO dtoToReturn = new CustomerDTO();
+        dtoToReturn.setFirstName(customerDTO.getFirstName());
+        dtoToReturn.setLastName(customerDTO.getLastName());
+        dtoToReturn.setCustomerUrl(CUSTOMER_URL);
+
+        when(customerService.createCustomer(customerDTO)).thenReturn(dtoToReturn);
+
+        mockMvc.perform(post(CUSTOMER_URL, dtoToReturn)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(dtoToReturn)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.firstName", equalTo(NAME)))
+                .andExpect(jsonPath("$.customerUrl", equalTo(CUSTOMER_URL)));
     }
 }
