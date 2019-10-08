@@ -87,6 +87,7 @@ public class CustomerControllerTest {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(NAME);
         customerDTO.setLastName(LAST_NAME);
+        customerDTO.setCustomerUrl(CUSTOMER_URL);
 
         CustomerDTO dtoToReturn = new CustomerDTO();
         dtoToReturn.setFirstName(customerDTO.getFirstName());
