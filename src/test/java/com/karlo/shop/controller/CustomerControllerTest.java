@@ -18,6 +18,7 @@ import java.util.List;
 import static com.karlo.shop.controller.AbstractRestControllerTest.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -96,7 +97,7 @@ public class CustomerControllerTest {
 
         when(customerService.createCustomer(customerDTO)).thenReturn(dtoToReturn);
 
-        mockMvc.perform(post(CUSTOMER_URL, dtoToReturn)
+        mockMvc.perform(post(CUSTOMER_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(dtoToReturn)))
                 .andExpect(status().isCreated())
@@ -116,6 +117,13 @@ public class CustomerControllerTest {
         dtoToReturn.setLastName(customerDTO.getLastName());
         dtoToReturn.setCustomerUrl(CUSTOMER_URL);
 
+        when(customerService.updateCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(dtoToReturn);
 
+        mockMvc.perform(put(CUSTOMER_URL + "1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(dtoToReturn)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", equalTo(NAME)))
+                .andExpect(jsonPath("$.customerUrl", equalTo(CUSTOMER_URL)));
     }
 }
