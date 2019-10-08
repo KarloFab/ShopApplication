@@ -16,7 +16,7 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CustomerServiceImplTest {
 
@@ -99,4 +99,12 @@ public class CustomerServiceImplTest {
         assertEquals(customerDTO.getLastName(), updatedDTO.getLastName());
     }
 
+    @Test
+    public void deleteCustomer() throws Exception{
+        Long id = 1L;
+
+        customerRepository.deleteById(id);
+
+        verify(customerRepository, times(1)).deleteById(id);
+    }
 }

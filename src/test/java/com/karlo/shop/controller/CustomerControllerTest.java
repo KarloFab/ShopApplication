@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -63,7 +64,7 @@ public class CustomerControllerTest {
         mockMvc.perform(get("/api/v1/customers/")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customers",hasSize(2)));
+                .andExpect(jsonPath("$.customers", hasSize(2)));
 
     }
 
@@ -78,8 +79,8 @@ public class CustomerControllerTest {
         mockMvc.perform(get("/api/v1/customers/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName",equalTo(NAME)))
-                .andExpect(jsonPath("$.lastName",equalTo(LAST_NAME)));
+                .andExpect(jsonPath("$.firstName", equalTo(NAME)))
+                .andExpect(jsonPath("$.lastName", equalTo(LAST_NAME)));
     }
 
     @Test
@@ -105,7 +106,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void saveCustomerByDTO() throws Exception{
+    public void saveCustomerByDTO() throws Exception {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(NAME);
         customerDTO.setLastName(LAST_NAME);
@@ -127,7 +128,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void patchCustomer() throws Exception{
+    public void patchCustomer() throws Exception {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(NAME);
         customerDTO.setLastName(LAST_NAME);
@@ -147,5 +148,15 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName", equalTo(NAME)))
                 .andExpect(jsonPath("$.lastName", equalTo(LAST_NAME)))
                 .andExpect(jsonPath("$.customerUrl", equalTo(CUSTOMER_URL)));
+    }
+
+    @Test
+    public void deleteCustomer() throws Exception {
+
+        mockMvc.perform(delete("/api/v1/customers/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(customerService).deleteCustomerById(anyLong());
     }
 }
