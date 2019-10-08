@@ -2,6 +2,7 @@ package com.karlo.shop.service.impl;
 
 import com.karlo.shop.api.v1.mapper.CustomerMapper;
 import com.karlo.shop.api.v1.model.CustomerDTO;
+import com.karlo.shop.controller.CustomerController;
 import com.karlo.shop.domain.Customer;
 import com.karlo.shop.repository.CustomerRepository;
 import com.karlo.shop.service.CustomerService;
@@ -25,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomerUrl("/api/v1/customer" + customer.getId());
+                    customerDTO.setCustomerUrl(getCustomerUrl(customer.getId()));
                     return customerDTO;
                 }).collect(Collectors.toList());
     }
@@ -64,7 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             CustomerDTO dtoToReturn = customerMapper.customerToCustomerDTO(customerRepository.save(customer));
 
-            dtoToReturn.setCustomerUrl("/api/v1/customer/" + id);
+            dtoToReturn.setCustomerUrl(getCustomerUrl(customer.getId()));
 
             return dtoToReturn;
         }).orElseThrow(RuntimeException::new);
@@ -80,8 +81,12 @@ public class CustomerServiceImpl implements CustomerService {
 
         CustomerDTO dtoToReturn = customerMapper.customerToCustomerDTO(customer);
 
-        dtoToReturn.setCustomerUrl("/api/v1/customer/" + savedCustomer.getId());
+        dtoToReturn.setCustomerUrl(getCustomerUrl(customer.getId()));
 
         return dtoToReturn;
+    }
+
+    private String getCustomerUrl(Long id){
+        return CustomerController.BASE_URL + "/" + id;
     }
 }

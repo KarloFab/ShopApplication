@@ -30,7 +30,7 @@ public class CustomerControllerTest {
     public static final Long ID = 1L;
     public static final String NAME = "Joe";
     public static final String LAST_NAME = "Joey";
-    public static final String CUSTOMER_URL = "/api/v1/customers/";
+    public static final String CUSTOMER_URL = CustomerController.BASE_URL;
 
     @Mock
     CustomerService customerService;
