@@ -55,13 +55,13 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id).map(customer -> {
 
             if(customerDTO.getFirstName() != null){
-                customer.setLastName(customerDTO.getFirstName());
+                customer.setFirstName(customerDTO.getFirstName());
             }
 
             if(customerDTO.getLastName() != null){
                 customer.setLastName(customerDTO.getLastName());
             }
-            
+
             return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
         }).orElseThrow(RuntimeException::new);
     }
