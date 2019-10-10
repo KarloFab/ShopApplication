@@ -1,9 +1,11 @@
 package com.karlo.shop.service;
 
 import com.karlo.shop.api.v1.model.CustomerDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface CustomerService {
 
     List<CustomerDTO> getAllCustomers();
