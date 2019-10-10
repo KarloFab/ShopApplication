@@ -3,6 +3,7 @@ package com.karlo.shop.service.impl;
 import com.karlo.shop.api.v1.mapper.VendorMapper;
 import com.karlo.shop.api.v1.model.VendorDTO;
 import com.karlo.shop.api.v1.model.VendorListDTO;
+import com.karlo.shop.controller.VendorController;
 import com.karlo.shop.domain.Vendor;
 import com.karlo.shop.repository.VendorRepository;
 import com.karlo.shop.service.VendorService;
@@ -34,7 +35,7 @@ public class VendorServiceImpl implements VendorService {
     }
 
     private String getVendorUrl(Long id) {
-        return null;
+        return VendorController.BASE_URL + "/" + id;
     }
 
     @Override
