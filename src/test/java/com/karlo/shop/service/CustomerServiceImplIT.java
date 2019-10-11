@@ -6,6 +6,7 @@ import com.karlo.shop.bootstrap.Bootstrap;
 import com.karlo.shop.domain.Customer;
 import com.karlo.shop.repository.CategoryRepository;
 import com.karlo.shop.repository.CustomerRepository;
+import com.karlo.shop.repository.VendorRepository;
 import com.karlo.shop.service.impl.CustomerServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,12 +29,15 @@ public class CustomerServiceImplIT {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    VendorRepository vendorRepository;
+
     CustomerService customerService;
 
     @Before
     public void setUp() throws Exception {
 
-        Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
+        Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository, vendorRepository);
         bootstrap.run();
 
         customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
