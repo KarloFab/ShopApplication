@@ -3,6 +3,7 @@ package com.karlo.shop.controller;
 import com.karlo.shop.api.v1.model.CustomerDTO;
 import com.karlo.shop.api.v1.model.CustomerListDTO;
 import com.karlo.shop.service.CustomerService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @ApiOperation(value = "This gets list of customers")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getAllCustomers() {
