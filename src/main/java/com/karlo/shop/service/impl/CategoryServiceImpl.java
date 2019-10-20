@@ -4,10 +4,12 @@ import com.karlo.shop.api.v1.mapper.CategoryMapper;
 import com.karlo.shop.api.v1.model.CategoryDTO;
 import com.karlo.shop.repository.CategoryRepository;
 import com.karlo.shop.service.CategoryService;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryMapper categoryMapper;

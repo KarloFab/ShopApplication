@@ -6,10 +6,12 @@ import com.karlo.shop.controller.CustomerController;
 import com.karlo.shop.domain.Customer;
 import com.karlo.shop.repository.CustomerRepository;
 import com.karlo.shop.service.CustomerService;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository customerRepository;

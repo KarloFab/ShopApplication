@@ -7,11 +7,13 @@ import com.karlo.shop.controller.VendorController;
 import com.karlo.shop.domain.Vendor;
 import com.karlo.shop.repository.VendorRepository;
 import com.karlo.shop.service.VendorService;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+@Component
 public class VendorServiceImpl implements VendorService {
 
     private final VendorMapper vendorMapper;
